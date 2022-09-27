@@ -27,7 +27,7 @@ def login():
     regex = re.compile(r'Max-Age=1800, (.*); Path')
     match = regex.search(cookie)
     cookie = match.group(1)
-    aes_key = resp.json()['data']['aesKey']
+    aes_key = key_resp.json()['data']['aesKey']
     
     password_md5 = MD5(PASSWORD)
     password_encypted = urllib.parse.quote_plus(encrypt(aes_key, password_md5))             #加密密码
