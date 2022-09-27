@@ -9,9 +9,11 @@ from cryptography.hazmat.primitives import padding
 PHONE_NUMBER = '在引号中填入手机号'
 PASSWORD = '在引号中填入密码'
 
+
 def MD5(msg):                   #将密码编码
     import hashlib
     return(hashlib.md5(msg.encode('utf-8')).hexdigest())
+
 
 def encrypt(key, msg):          #模拟守望领域APP的方式进行AES加密
     cipher = Cipher(algorithms.AES(str.encode(key)), modes.ECB())
@@ -21,8 +23,10 @@ def encrypt(key, msg):          #模拟守望领域APP的方式进行AES加密
     ct = encryptor.update(msg) + encryptor.finalize()
     return base64.b64encode(ct)
 
+
 def login():                    
     key_resp = requests.post('https://api.lookdoor.cn:443/func/hjapp/user/v2/getPasswordAesKey.json?') #获取cookie, 获取AES密钥
+    global cookie
     cookie = key_resp.headers['set-cookie']
     regex = re.compile(r'Max-Age=1800, (.*); Path')
     match = regex.search(cookie)
@@ -35,9 +39,10 @@ def login():
     requests.post(login_url, headers={'cookie': cookie})
     
     doorquery_url = f'https://api.lookdoor.cn/func/hjapp/house/v1/getEquipAccessListNew.json'         #查询门的ID
-    doorquery_resp = requests.post(doorquery_url, headers={'cookie': cookie})
     global doorquery_resp
-    
+    doorquery_resp = requests.post(doorquery_url, headers={'cookie': cookie})
+
+
 def unlock(door_number): 
     equipment_id = doorquery_resp.json()['data'][door_number]['id'] 
     unlock_url = f'https://api.lookdoor.cn:443/func/hjapp/house/v1/pushOpenDoorBySn.json?equipmentId={equipment_id}'       #发送开门请求
