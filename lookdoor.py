@@ -6,8 +6,8 @@ import re
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 
-PHONE_NUMBER = ''
-PASSWORD = ''
+PHONE_NUMBER = '在引号中填入手机号'
+PASSWORD = '在引号中填入密码'
 
 def MD5(msg):
     import hashlib
