@@ -36,6 +36,7 @@ def login():
     
     doorquery_url = f'https://api.lookdoor.cn/func/hjapp/house/v1/getEquipAccessListNew.json'         #查询门的ID
     doorquery_resp = requests.post(doorquery_url, headers={'cookie': cookie})
+    global doorquery_resp
     
 def unlock(door_number): 
     equipment_id = doorquery_resp.json()['data'][door_number]['id'] 
