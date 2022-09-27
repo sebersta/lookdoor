@@ -21,7 +21,7 @@ def encrypt(key, msg):
     ct = encryptor.update(msg) + encryptor.finalize()
     return base64.b64encode(ct)
 
-def unlock():
+def login():
     resp = requests.post('https://api.lookdoor.cn:443/func/hjapp/user/v2/getPasswordAesKey.json?')
     cookie = resp.headers['set-cookie']
     regex = re.compile(r'Max-Age=1800, (.*); Path')
@@ -35,15 +35,22 @@ def unlock():
     url = f'https://api.lookdoor.cn:443/func/hjapp/user/v2/login.json?password={password_encypted}&deviceId=&loginNumber={PHONE_NUMBER}&equipmentFlag=1'
     requests.post(url, headers={'cookie': cookie})
     
+def unlock(door_number): 
     url = f'https://api.lookdoor.cn/func/hjapp/house/v1/getEquipAccessListNew.json'
     resp = requests.post(url, headers={'cookie': cookie})
     print(resp.json())
-    equipment_id = resp.json()['data'][0]['id']
+    equipment_id = resp.json()['data'][door_number]['id'] 
     
     url = f'https://api.lookdoor.cn:443/func/hjapp/house/v1/pushOpenDoorBySn.json?equipmentId={equipment_id}'
     resp = requests.post(url, headers={'cookie': cookie})
     print(resp.json())
     return resp.json()
 
-unlock()
 
+def main():
+    login()
+    unlock(0) # 若账号绑定多个门，则需要修改这里的door_number来指定开哪个门。
+    #unlock(1) # 也可以同时打开多个门。
+
+if __name__ == "__main__":
+    main()
