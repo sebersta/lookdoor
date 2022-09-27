@@ -28,7 +28,6 @@ def login():
     match = regex.search(cookie)
     cookie=match.group(1)
     aes_key = resp.json()['data']['aesKey']
-    print(aes_key)
     password_md5 = MD5(PASSWORD)
     password_encypted = urllib.parse.quote_plus(encrypt(aes_key, password_md5))
     
@@ -38,12 +37,11 @@ def login():
 def unlock(door_number): 
     url = f'https://api.lookdoor.cn/func/hjapp/house/v1/getEquipAccessListNew.json'
     resp = requests.post(url, headers={'cookie': cookie})
-    print(resp.json())
     equipment_id = resp.json()['data'][door_number]['id'] 
     
     url = f'https://api.lookdoor.cn:443/func/hjapp/house/v1/pushOpenDoorBySn.json?equipmentId={equipment_id}'
     resp = requests.post(url, headers={'cookie': cookie})
-    print(resp.json())
+    # print(resp.json()) 
     return resp.json()
 
 
