@@ -6,13 +6,12 @@ import re
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 
-PHONE = ''
+PHONE_NUMBER = ''
 PASSWORD = ''
 
 def MD5(msg):
     import hashlib
     return(hashlib.md5(msg.encode('utf-8')).hexdigest())
-    
 
 def encrypt(key, msg):
     cipher = Cipher(algorithms.AES(str.encode(key)), modes.ECB())
@@ -33,7 +32,7 @@ def unlock():
     password_md5 = MD5(PASSWORD)
     password_encypted = urllib.parse.quote_plus(encrypt(aes_key, password_md5))
     
-    url = f'https://api.lookdoor.cn:443/func/hjapp/user/v2/login.json?password={password_encypted}&deviceId=&loginNumber={PHONE}&equipmentFlag=1'
+    url = f'https://api.lookdoor.cn:443/func/hjapp/user/v2/login.json?password={password_encypted}&deviceId=&loginNumber={PHONE_NUMBER}&equipmentFlag=1'
     requests.post(url, headers={'cookie': cookie})
     
     url = f'https://api.lookdoor.cn/func/hjapp/house/v1/getEquipAccessListNew.json'
