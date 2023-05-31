@@ -7,7 +7,6 @@
 ```
 pip3 install cryptography requests
 ```
-[下载](https://raw.githubusercontent.com/SebErstellen/lookdoor/main/lookdoor.py)
 
 在lookdoor.py中填入守望领域的账号和密码即刻立即开门，无需打开app或观看广告。
 
