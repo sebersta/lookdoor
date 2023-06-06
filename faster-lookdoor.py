@@ -28,7 +28,7 @@ def main():
     
     unlock_url = f'https://api.lookdoor.cn:443/func/hjapp/house/v1/pushOpenDoorBySn.json?equipmentId={equipment_id}'
     unlock_resp = requests.post(unlock_url, headers={'cookie': cookie})
-    print(unlock_resp.json())
+    return unlock_resp.json()['message']
 
 if __name__ == "__main__":
     main()
