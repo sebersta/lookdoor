@@ -6,7 +6,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 
 phone_number = ''
-password_md5 = ''
+password_md5 = '' # plaintext passwords work too
 equipment_id = ''
 
 def encrypt(key, msg):
