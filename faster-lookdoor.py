@@ -8,6 +8,7 @@ from cryptography.hazmat.primitives import padding
 phone_number = ''
 password_md5 = '' # plaintext passwords work too
 equipment_id = ''
+# equipment_id1 = ''
 
 def encrypt(key, msg):
     cipher = Cipher(algorithms.AES(str.encode(key)), modes.ECB())
