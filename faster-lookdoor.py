@@ -6,9 +6,8 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 
 phone_number = ''
-password_md5 = '' # plaintext passwords work too
+password_md5 = '' # plaintext passwords might work too
 equipment_id = ''
-# equipment_id1 = ''
 
 def encrypt(key, msg):
     cipher = Cipher(algorithms.AES(str.encode(key)), modes.ECB())
@@ -25,7 +24,6 @@ def main():
     password_encypted = urllib.parse.quote_plus(encrypt(aes_key, password_md5))
     login_url = f'https://api.lookdoor.cn:443/func/hjapp/user/v2/login.json?password={password_encypted}&deviceId=&loginNumber={phone_number}&equipmentFlag=1'
     login_resp=requests.post(login_url, headers={'cookie': cookie, 'Connection': 'keep-alive'})
-    
     unlock_url = f'https://api.lookdoor.cn:443/func/hjapp/house/v1/pushOpenDoorBySn.json?equipmentId={equipment_id}'
     unlock_resp = requests.post(unlock_url, headers={'cookie': cookie})
     return unlock_resp.json()['message']
